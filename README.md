@@ -63,6 +63,7 @@ Captured during a live Docker smoke; catalog data can change.
 ## Documentation
 
 - [Specification and SDD increments](docs/specification.md)
+- [Sampled design colors and badge styling](docs/design-tokens.md)
 - [Technical decisions and trade-offs](DECISIONS.md)
 - [Validation evidence and resolved findings](docs/validation.md)
 - [Final architecture](docs/architecture/README.md), [Mermaid](docs/architecture/architecture.mmd), [SVG](docs/architecture/architecture.svg)

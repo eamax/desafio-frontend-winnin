@@ -354,3 +354,56 @@ for (const [width, height] of [
     await expect(page.getByTestId('compact-skeleton')).toHaveCount(0);
   });
 }
+
+test('score badge and format colors match the sampled design tokens', async ({
+  page,
+}) => {
+  const samples = [49, 50, 80, 81, null];
+  await page.route('https://graphql.anilist.co', (route) =>
+    route.fulfill({
+      json: body(
+        samples.map((score, index) => ({
+          ...item(index + 1),
+          averageScore: score,
+        })),
+      ),
+    }),
+  );
+  await page.goto('/');
+  await expect(page.getByRole('article')).toHaveCount(5);
+  const colors = [
+    'rgb(234, 33, 81)',
+    'rgb(255, 184, 0)',
+    'rgb(255, 184, 0)',
+    'rgb(9, 173, 166)',
+  ];
+  for (const [index, score] of samples.entries()) {
+    const badge = page.getByLabel(
+      score === null ? 'Sem avaliação' : `Avaliação: ${score} de 100`,
+      { exact: true },
+    );
+    if (score === null) {
+      await expect(badge).toHaveCSS('color', 'rgb(53, 44, 64)');
+      await expect(badge).toHaveCSS('background-color', 'rgb(236, 232, 240)');
+      await expect(badge).toHaveText('Sem avaliação');
+    } else {
+      await expect(badge).toHaveText(`${score}%`);
+      await expect(badge).toHaveCSS('color', 'rgb(255, 255, 255)');
+      await expect(badge).toHaveCSS('background-color', colors[index]);
+      await expect(badge).toHaveCSS('font-weight', '400');
+      await expect(badge).toHaveCSS('font-size', '24px');
+      await expect(badge).toHaveCSS('font-family', 'Arial, sans-serif');
+    }
+  }
+  const all = page.getByRole('button', { name: 'All Formats' });
+  const movie = page.getByRole('button', { name: 'Movie', exact: true });
+  await expect(movie).toHaveCSS('color', 'rgb(97, 36, 197)');
+  await expect(movie).toHaveCSS('border-top-color', 'rgb(97, 36, 197)');
+  await expect(all).toHaveCSS('color', 'rgb(255, 255, 255)');
+  await expect(all).toHaveCSS('background-color', 'rgb(97, 36, 197)');
+  await movie.click();
+  await expect(movie).toHaveAttribute('aria-pressed', 'true');
+  await expect(movie).toHaveCSS('color', 'rgb(255, 255, 255)');
+  await expect(all).toHaveCSS('color', 'rgb(97, 36, 197)');
+  await expect(all).toHaveCSS('border-top-color', 'rgb(97, 36, 197)');
+});

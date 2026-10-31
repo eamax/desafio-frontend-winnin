@@ -19,6 +19,8 @@ Design: https://www.figma.com/design/PPvIPPITdlgZo9CeGDVezk?node-id=3396-64
 - R11: Footer reaches the viewport bottom for empty/short catalogs and follows long content in normal document flow, without fixed positioning or overlap.
 - R12: Initial loading shows 12 decorative skeleton cards and an accessible loading announcement. Criteria changes show the previous item count as skeletons (12 initially), reserve the previous complete result-area height including load-more, and never show old records under new criteria. After an empty result, show a compact decorative loading placeholder inside the measured previous result area instead of proportional cards. Grid top and footer position remain stable while pending; resolved results may naturally resize. Cached immediate success needs no skeleton. Additional-page loading keeps existing cards and appends 12 decorative skeletons in the same grid. Skeleton respects reduced motion.
 
+- R13: Outlined format text and borders use primary purple #6124c5; selected formats keep white text. Numeric score badges use white, regular-weight 24px Arial/sans-serif on red #ea2151, yellow #ffb800 or turquoise #09ada6. Preserve written score boundaries (80 yellow) and dark neutral Sem avaliação. Colors approximate ICC-converted screenshot samples, not Figma node metadata.
+
 ## SDD workflow
 
 Specify -> derive tests -> implement -> QA -> corrections/revalidation -> reviewer -> commit. Update this specification before changing intended behavior. Evidence maps requirement IDs to checks; never label unexecuted checks as passed.

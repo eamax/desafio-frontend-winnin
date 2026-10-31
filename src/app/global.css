@@ -3,7 +3,10 @@
   color: #26222e;
   background: #fff;
   font-synthesis: none;
-  --purple: #5829bb;
+  --purple: #6124c5;
+  --score-red: #ea2151;
+  --score-yellow: #ffb800;
+  --score-green: #09ada6;
   --yellow: #f7bc3e;
 }
 * {

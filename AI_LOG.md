@@ -29,3 +29,7 @@ User requested stable loading and a footer at the bottom for sparse catalogs. Fr
 QA clarified additional-page feedback: added 12 decorative skeletons after existing cards in the same grid and strengthened the deferred-page browser regression.
 
 QA revoked the layout approval after reproducing empty-result-to-pending expansion on desktop/mobile. Developer replaced the empty transition with compact absolute loading bars inside the measured result region, contained paragraph margins with flow-root, and added desktop/mobile/short-viewport geometry regressions. Initial and nonempty skeleton behavior remains separate.
+
+## Format and score visual correction
+
+User identified dark inactive filter text and dark bold score numbers diverging from the Figma. Root sampled the reference JPEG and converted its Display P3 profile to sRGB; frontend agent specified R13 first, then applied primary/score tokens and regular white numeric text. Preserved 80 as yellow and neutral missing scores. Rejected claiming exact Figma metadata or contrast compliance from screenshot-derived colors; documented the low-contrast fidelity trade-off. Added computed-style browser regression for boundary values and filter selection. Independent QA/reviewer gate pending.

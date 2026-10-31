@@ -98,22 +98,23 @@
   margin-top: auto;
   padding: 6px 10px;
   border-radius: 4px;
+  font-family: Arial, sans-serif;
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.2;
 }
 
 .red {
-  background: #fa6464;
-  color: #261010;
+  background: var(--score-red);
+  color: #fff;
 }
 .yellow {
-  background: #ffdc5c;
-  color: #322800;
+  background: var(--score-yellow);
+  color: #fff;
 }
 .green {
-  background: #62dd9b;
-  color: #102c1b;
+  background: var(--score-green);
+  color: #fff;
 }
 .neutral {
   background: #ece8f0;

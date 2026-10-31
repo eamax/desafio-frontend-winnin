@@ -20,7 +20,7 @@
   border: 1px solid var(--purple);
   border-radius: 4px;
   background: transparent;
-  color: var(--color-text, #30243f);
+  color: var(--purple);
   padding: 7px 20px;
   font: inherit;
   font-size: 0.75rem;

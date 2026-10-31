@@ -9,6 +9,10 @@
 - No login, favorites, detail routes or backend. Prefer focused behavior tests over coverage targets.
 - Responsive layouts beyond provided desktop are adaptations. Live catalog titles/covers/scores vary over time.
 
+## Sampled design colors
+
+Primary and numeric score colors follow approximate JPEG reference samples converted from Display P3 to sRGB, not Figma node metadata. Score numbers use regular white Arial at 24px. White on the sampled badge backgrounds has limited contrast (especially yellow); this fidelity choice is recorded explicitly and is not a WCAG contrast compliance claim. Neutral missing-score text stays dark. Written score thresholds remain authoritative. See docs/design-tokens.md.
+
 ## With more time
 
 Hosted preview, broader browser/device checks, and designer review of responsive adaptations.
