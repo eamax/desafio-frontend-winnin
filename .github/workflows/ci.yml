@@ -21,3 +21,12 @@ jobs:
         with:
           name: browser-evidence
           path: test-results/
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose up --build -d --wait
+      - run: curl --fail http://localhost:8080/
+      - run: test "$(docker compose exec -T buscanime id -u)" != "0"
+      - run: docker compose down
+        if: always()

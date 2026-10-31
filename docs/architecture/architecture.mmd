@@ -1,0 +1,15 @@
+flowchart TB
+  subgraph Build[Build and runtime]
+    Source[React + TypeScript source and npm lockfile] --> Vite[Node 22 / Vite production build]
+    Vite --> Static[Static HTML / CSS / JavaScript]
+    Static --> Nginx[Unprivileged Nginx :8080 / Docker Compose]
+  end
+  Nginx --> Browser[Browser / React providers]
+  Browser --> Catalog[AnimeCatalog: submitted search, format and states]
+  Catalog --> Cards[AnimeCard and score rules]
+  Catalog --> Query[TanStack Query: cache, pagination, cancellation]
+  Query --> Transport[Typed fetch GraphQL transport and mapping]
+  Transport -->|HTTPS POST query + variables| AniList[AniList public GraphQL API]
+  AniList -->|data or errors| Transport
+  Tests[Vitest + RTL + MSW / Playwright] -. validate .-> Catalog
+  Tests -. validate .-> Transport
