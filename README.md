@@ -10,4 +10,4 @@ Docker and end-to-end instructions will be added with their implementation.
 
 Node.js 22.20+ and npm are required. Run `npm ci`, then `npm run dev`. Production: `npm run build` and `npm run preview`.
 
-Quality scripts: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`. The initial foundation has no behavior tests yet; use `npm test -- --passWithNoTests` to check the runner until the API increment adds tests.
+Quality scripts: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`. Unit tests cover the GraphQL contract, nullable fields, cancellation, failures and rate limits without contacting the live API.
