@@ -150,7 +150,7 @@ describe('fetchAnimePage', () => {
   it.each([
     ['30', 30_000],
     ['-1', 60_000],
-    ['Sat, 31 Oct 2026 22:01:00 GMT', 60_000],
+    ['Sat, 31 Oct 2026 22:02:00 GMT', 120_000],
     [null, 60_000],
     ['invalid', 60_000],
   ])('honors rate limit Retry-After %s', async (header, delay) => {

@@ -15,3 +15,7 @@ Reviewer found the declared Node minimum was lower than transitive tooling requi
 
 Foundation approved by QA and reviewer after correcting Node minimum. Added typed named GraphQL operation, nullable data mapping, cancellation/error handling and API unit tests. R5/R6/R9. Real public API smoke returned Cowboy Bebop ID 1 and score 86 using combined search/TV format. Removed temporary passWithNoTests CI exception.
 API checks: npm run check passed with 16 tests; QA identified invalid negative Retry-After parsing. Developer corrected to 60-second fallback and added regression: 17 API tests passed. Full gate follows the corrected diff.
+
+## Increment 4 — card presentation
+
+GraphQL increment approved by QA and reviewer, 17 tests. Reviewer suggested making HTTP-date test distinct from fallback: changed expected date to +120 seconds. Added standalone Figma-style card, percent score with textual accessible name, null/failed-cover fallback and pure score classification. R2/R4/R7. Catalog composition follows in increment 5.

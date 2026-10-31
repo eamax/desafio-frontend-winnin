@@ -1,0 +1,113 @@
+.card {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  aspect-ratio: 316 / 270;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #28232e;
+  color: #fff;
+}
+
+.cover,
+.missingCover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.missingCover {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #3c2d50, #19151e);
+  color: #ded4e8;
+}
+
+.missingCover span {
+  margin-top: 50%;
+  font-size: 0.875rem;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 78%),
+    rgb(0 0 0 / 25%) 60%,
+    rgb(0 0 0 / 65%)
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.genres li {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #6735a3;
+  color: #fff;
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
+.score {
+  align-self: flex-end;
+  margin-top: auto;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.red {
+  background: #fa6464;
+  color: #261010;
+}
+.yellow {
+  background: #ffdc5c;
+  color: #322800;
+}
+.green {
+  background: #62dd9b;
+  color: #102c1b;
+}
+.neutral {
+  background: #ece8f0;
+  color: #352c40;
+  font-size: 0.75rem;
+}
