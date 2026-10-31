@@ -110,7 +110,11 @@ export async function fetchAnimePage({
       },
       body: JSON.stringify({
         query: QUERY,
-        variables: { search: search.trim() || null, format, page },
+        variables: {
+          search: search.trim() || null,
+          ...(format ? { format } : {}),
+          page,
+        },
       }),
       signal,
     });

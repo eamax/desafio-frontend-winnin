@@ -61,12 +61,11 @@ describe('fetchAnimePage', () => {
     });
   });
 
-  it('sends null for an empty search and All Formats', async () => {
+  it('omits format for All Formats and sends null for an empty search', async () => {
     const fetchMock = mockResponse(payload([]));
     expect((await fetchAnimePage(params)).items).toEqual([]);
     expect(JSON.parse(fetchMock.mock.calls[0][1].body).variables).toEqual({
       search: null,
-      format: null,
       page: 1,
     });
   });

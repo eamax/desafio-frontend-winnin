@@ -204,7 +204,7 @@ describe('AnimeCatalog', () => {
     let resolveOld: (() => void) | undefined;
     server.use(
       graphql.query('AnimeCatalog', async ({ variables }) => {
-        if (variables.format === null) {
+        if (variables.format == null) {
           await new Promise<void>((resolve) => {
             resolveOld = resolve;
           });
