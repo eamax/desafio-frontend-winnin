@@ -3,7 +3,7 @@ import styles from './App.module.css';
 import './global.css';
 export function App() {
   return (
-    <>
+    <div className={styles.shell}>
       <a className={styles.skip} href="#catalog">
         Pular para o catálogo
       </a>
@@ -12,7 +12,7 @@ export function App() {
           BUSC<span>ANIME</span>
         </h1>
       </header>
-      <main id="catalog">
+      <main id="catalog" className={styles.main}>
         <AnimeCatalog />
       </main>
       <footer className={styles.footer}>
@@ -21,6 +21,6 @@ export function App() {
         </p>
         <small>TODOS OS DIREITOS RESERVADOS</small>
       </footer>
-    </>
+    </div>
   );
 }

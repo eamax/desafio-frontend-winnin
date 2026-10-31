@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { AnimeCard } from './AnimeCard';
 import { CatalogError, type AnimeFormat } from './api';
 import { useAnimeCatalog } from './useAnimeCatalog';
@@ -15,7 +15,24 @@ const FORMATS: { label: string; value: AnimeFormat | null }[] = [
   { label: 'Music', value: 'MUSIC' },
 ];
 
+function SkeletonCards({ count }: { count: number }) {
+  return Array.from({ length: count }, (_, index) => (
+    <div
+      className={styles.skeleton}
+      key={index}
+      aria-hidden="true"
+      data-testid="skeleton-card"
+    >
+      <div className={styles.skeletonTitle} />
+      <div className={styles.skeletonGenre} />
+      <div className={styles.skeletonScore} />
+    </div>
+  ));
+}
+
 export function AnimeCatalog() {
+  const resultsRef = useRef<HTMLDivElement>(null);
+  const [pendingLayout, setPendingLayout] = useState({ count: 12, height: 0 });
   const [draft, setDraft] = useState('');
   const [search, setSearch] = useState('');
   const [format, setFormat] = useState<AnimeFormat | null>(null);
@@ -33,16 +50,26 @@ export function AnimeCatalog() {
     return () => window.clearInterval(timer);
   }, [retryAt]);
 
+  function reserveResults() {
+    if (catalog.isPending) return;
+    setPendingLayout({
+      count: catalog.items.length,
+      height: resultsRef.current?.getBoundingClientRect().height ?? 0,
+    });
+  }
+
   function submitSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const nextSearch = draft.trim();
     if (coolingDown || nextSearch === search) return;
+    reserveResults();
     catalog.resetPagination(nextSearch, format);
     setSearch(nextSearch);
   }
 
   function changeFormat(nextFormat: AnimeFormat | null) {
     if (coolingDown || nextFormat === format) return;
+    reserveResults();
     catalog.resetPagination(search, nextFormat);
     setFormat(nextFormat);
   }
@@ -94,10 +121,7 @@ export function AnimeCatalog() {
         </form>
       </div>
 
-      <p
-        role="status"
-        className={catalog.isPending ? styles.status : styles.srOnly}
-      >
+      <p role="status" className={styles.srOnly}>
         {catalog.isPending
           ? 'Carregando animes…'
           : catalog.isFetchingNextPage
@@ -108,53 +132,85 @@ export function AnimeCatalog() {
                 ? `${catalog.items.length} animes encontrados`
                 : ''}
       </p>
+      <div
+        ref={resultsRef}
+        data-testid="results-area"
+        className={styles.results}
+        aria-busy={catalog.isFetching}
+        style={
+          catalog.isPending ? { minHeight: pendingLayout.height } : undefined
+        }
+      >
+        {catalog.isPending && pendingLayout.count === 0 && (
+          <div
+            className={styles.compactSkeleton}
+            aria-hidden="true"
+            data-testid="compact-skeleton"
+          >
+            <div className={styles.skeletonTitle} />
+            <div className={styles.skeletonGenre} />
+          </div>
+        )}
+        {catalog.isPending && pendingLayout.count > 0 && (
+          <div
+            className={styles.grid}
+            aria-hidden="true"
+            data-testid="skeleton-grid"
+          >
+            <SkeletonCards count={pendingLayout.count} />
+          </div>
+        )}
 
-      {catalog.isError && (
-        <div className={styles.error} role="alert">
-          <p>
-            {catalog.error instanceof Error
-              ? catalog.error.message
-              : 'Não foi possível consultar os animes.'}
-          </p>
-          {coolingDown && (
-            <p>Aguarde {secondsLeft} segundos para tentar novamente.</p>
+        {catalog.isError && (
+          <div className={styles.error} role="alert">
+            <p>
+              {catalog.error instanceof Error
+                ? catalog.error.message
+                : 'Não foi possível consultar os animes.'}
+            </p>
+            {coolingDown && (
+              <p>Aguarde {secondsLeft} segundos para tentar novamente.</p>
+            )}
+            <button
+              type="button"
+              onClick={retry}
+              disabled={coolingDown || catalog.isFetching}
+            >
+              Tentar novamente
+            </button>
+          </div>
+        )}
+
+        {!catalog.isPending &&
+          !catalog.isError &&
+          catalog.items.length === 0 && (
+            <p className={styles.empty}>
+              Nenhum anime encontrado. Experimente outro termo ou formato.
+            </p>
           )}
+
+        {catalog.items.length > 0 && (
+          <div className={styles.grid} aria-busy={catalog.isFetching}>
+            {catalog.items.map((anime) => (
+              <AnimeCard key={anime.id} anime={anime} />
+            ))}
+            {catalog.isFetchingNextPage && <SkeletonCards count={12} />}
+          </div>
+        )}
+
+        {catalog.hasNextPage && (
           <button
+            className={styles.loadMore}
             type="button"
-            onClick={retry}
+            onClick={() => {
+              void catalog.fetchNextPage();
+            }}
             disabled={coolingDown || catalog.isFetching}
           >
-            Tentar novamente
+            {catalog.isFetchingNextPage ? 'Carregando…' : 'Ver mais'}
           </button>
-        </div>
-      )}
-
-      {!catalog.isPending && !catalog.isError && catalog.items.length === 0 && (
-        <p className={styles.empty}>
-          Nenhum anime encontrado. Experimente outro termo ou formato.
-        </p>
-      )}
-
-      {catalog.items.length > 0 && (
-        <div className={styles.grid} aria-busy={catalog.isFetching}>
-          {catalog.items.map((anime) => (
-            <AnimeCard key={anime.id} anime={anime} />
-          ))}
-        </div>
-      )}
-
-      {catalog.hasNextPage && (
-        <button
-          className={styles.loadMore}
-          type="button"
-          onClick={() => {
-            void catalog.fetchNextPage();
-          }}
-          disabled={coolingDown || catalog.isFetching}
-        >
-          {catalog.isFetchingNextPage ? 'Carregando…' : 'Ver mais'}
-        </button>
-      )}
+        )}
+      </div>
     </section>
   );
 }

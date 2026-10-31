@@ -21,3 +21,11 @@ Actual corrections/rejections:
 - No forced dependency downgrade, fabricated test evidence or claimed human sign-off. Docker/runtime smoke and final review outcomes are recorded in docs/validation.md.
 
 The live Docker smoke found a real upstream difference hidden by mocks: explicit format:null altered AniList results. Read-only comparative queries isolated it; transport now omits the unspecified variable, with dedicated regression and documentation in docs/anilist-format-null.md. This correction received its own QA/reviewer gate and fix commit. Afterward the real browser returned12 popular titles with loaded covers; docs/preview.png records the inspected state.
+
+## Footer and loading layout refinement
+
+User requested stable loading and a footer at the bottom for sparse catalogs. Frontend agent specified R11/R12 before implementation, then used a viewport-height flex shell and decorative skeletons. Accepted measuring the complete result area (including load-more) before criteria changes; rejected always rendering 12 placeholders because it expands one-result views and collapses 24-result views. Kept the previous reservation across rapid pending changes and excluded stale records from the new criteria. Added unit behavior checks and real-browser geometry/reduced-motion regressions. Independent QA/reviewer gate follows these developer checks; no approval is claimed here.
+
+QA clarified additional-page feedback: added 12 decorative skeletons after existing cards in the same grid and strengthened the deferred-page browser regression.
+
+QA revoked the layout approval after reproducing empty-result-to-pending expansion on desktop/mobile. Developer replaced the empty transition with compact absolute loading bars inside the measured result region, contained paragraph margins with flow-root, and added desktop/mobile/short-viewport geometry regressions. Initial and nonempty skeleton behavior remains separate.

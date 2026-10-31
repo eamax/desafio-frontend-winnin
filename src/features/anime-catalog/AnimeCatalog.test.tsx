@@ -145,6 +145,71 @@ describe('AnimeCatalog', () => {
     client.clear();
   });
 
+  it('shows decorative initial skeletons, then preserves the previous count while criteria load', async () => {
+    let release: (() => void) | undefined;
+    let pendingRequests = 0;
+    server.use(
+      graphql.query('AnimeCatalog', async ({ variables }) => {
+        if (variables.format) {
+          pendingRequests++;
+          await new Promise<void>((resolve) => {
+            release = resolve;
+          });
+          return HttpResponse.json(response([anime(2, 'New filtered result')]));
+        }
+        return HttpResponse.json(response([anime(1, 'Previous result')]));
+      }),
+    );
+    const { user } = renderCatalog();
+    expect(screen.getAllByTestId('skeleton-card')).toHaveLength(12);
+    expect(screen.getByTestId('skeleton-grid')).toHaveAttribute(
+      'aria-hidden',
+      'true',
+    );
+    expect(screen.getByRole('status')).toHaveTextContent('Carregando animes');
+    expect(screen.getByRole('status').closest('[aria-busy="true"]')).toBeNull();
+    await screen.findByRole('heading', { name: 'Previous result' });
+    expect(screen.queryByTestId('skeleton-grid')).not.toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Movie' }));
+    await waitFor(() => expect(release).toBeDefined());
+    expect(screen.getAllByTestId('skeleton-card')).toHaveLength(1);
+    expect(
+      screen.queryByRole('heading', { name: 'Previous result' }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('Carregando animes');
+    await user.click(screen.getByRole('button', { name: 'TV Show' }));
+    await waitFor(() => expect(pendingRequests).toBe(2));
+    expect(screen.getAllByTestId('skeleton-card')).toHaveLength(1);
+    release?.();
+    await screen.findByRole('heading', { name: 'New filtered result' });
+    expect(screen.queryByTestId('skeleton-grid')).not.toBeInTheDocument();
+  });
+
+  it('uses a compact placeholder when new criteria follow an empty result', async () => {
+    let release: (() => void) | undefined;
+    server.use(
+      graphql.query('AnimeCatalog', async ({ variables }) => {
+        if (variables.search) {
+          await new Promise<void>((resolve) => {
+            release = resolve;
+          });
+          return HttpResponse.json(response([anime(1, 'Found result')]));
+        }
+        return HttpResponse.json(response([]));
+      }),
+    );
+    const { user } = renderCatalog();
+    await screen.findByText(/Nenhum anime encontrado/);
+    await user.type(screen.getByRole('searchbox'), 'new');
+    await user.click(screen.getByRole('button', { name: 'Buscar' }));
+    await screen.findByTestId('compact-skeleton');
+    expect(screen.queryByTestId('skeleton-card')).not.toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('Carregando animes');
+    await waitFor(() => expect(release).toBeDefined());
+    release?.();
+    await screen.findByRole('heading', { name: 'Found result' });
+  });
+
   it('shows an empty state', async () => {
     server.use(
       graphql.query('AnimeCatalog', () => HttpResponse.json(response([]))),

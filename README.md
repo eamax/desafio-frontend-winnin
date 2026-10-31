@@ -49,6 +49,7 @@ Unit/integration tests use Vitest, Testing Library and MSW. Browser journeys use
 - Search applies on **Buscar** or Enter, not each keystroke. Format changes use the last submitted search.
 - Pages contain 12 results, sorted by popularity with an ID tie-breaker. Changing criteria restarts at page 1, including cached combinations.
 - Requests are cancellable, cached for five minutes and never automatically retried. Rate limits show a cooldown and explicit retry; a failed additional page preserves existing cards.
+- Initial loading uses 12 decorative skeleton cards; changing criteria retains the previous result-area size and skeleton count until the new response arrives. After empty results, a compact loading placeholder preserves the previous area. Additional pages keep existing cards and append 12 skeletons. The footer reaches the viewport bottom on short catalogs and follows long content normally. [Layout behavior](docs/catalog-layout.md).
 - Desktop uses four columns; tablet two; mobile one. Keyboard labels, focus states and non-color score descriptions are included.
 - Live titles, covers, genres and scores differ from the historical Figma examples. The written rule makes score 80 yellow despite the mockup's green example. System fonts are used; exact Figma font metadata was not available in the anonymous inspection. Responsive layouts are documented adaptations, not an assertion of pixel-perfect reproduction.
 - Deployment online is outside this delivery. No login, favorites, backend or details route.
