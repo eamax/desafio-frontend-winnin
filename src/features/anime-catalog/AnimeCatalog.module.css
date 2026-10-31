@@ -1,0 +1,151 @@
+.catalog {
+  width: min(100% - 48px, 1312px);
+  margin: 0 auto;
+  padding: 24px 0 0;
+}
+
+.controls {
+  width: min(100%, 1012px);
+  margin: 0 auto;
+}
+
+.formats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+}
+
+.format {
+  border: 1px solid var(--purple);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-text, #30243f);
+  padding: 7px 20px;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.format[aria-pressed='true'] {
+  background: var(--purple);
+  color: #fff;
+}
+
+.search {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.search input {
+  min-width: 0;
+  flex: 1;
+  border: 1px solid #d6cedf;
+  border-radius: 4px;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--color-text, #30243f);
+  background: #fff;
+}
+
+.search button,
+.error button {
+  border: 0;
+  border-radius: 4px;
+  padding: 10px 24px;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: var(--purple);
+  cursor: pointer;
+}
+
+.status {
+  min-height: 1.5em;
+  margin: 20px 0 12px;
+  text-align: center;
+  color: #5f536b;
+  font-size: 0.875rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.loadMore {
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+  border: 0;
+  border-radius: 4px;
+  padding: 16px;
+  color: #302600;
+  background: var(--yellow);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.error,
+.empty {
+  margin: 24px auto;
+  padding: 24px;
+  text-align: center;
+  color: var(--color-text, #30243f);
+}
+
+.error {
+  background: #fff2f2;
+  border-radius: 8px;
+}
+.error p {
+  margin: 0 0 16px;
+}
+.catalog button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.catalog :focus-visible {
+  outline: 3px solid #b077f4;
+  outline-offset: 3px;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (width < 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .formats {
+    justify-content: flex-start;
+  }
+}
+
+@media (width < 600px) {
+  .catalog {
+    width: calc(100% - 32px);
+    padding-top: 24px;
+  }
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .search {
+    gap: 8px;
+  }
+  .search button {
+    padding-inline: 16px;
+  }
+}

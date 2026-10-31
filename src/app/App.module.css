@@ -1,0 +1,49 @@
+.header {
+  background: var(--purple);
+  color: white;
+  text-align: center;
+  padding: 12px 16px;
+}
+.header h1 {
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0;
+}
+.header span,
+.footer span {
+  color: var(--yellow);
+}
+.footer {
+  text-align: center;
+  background: var(--purple);
+  color: white;
+  padding: 6px 16px;
+  margin-top: 24px;
+}
+.footer p {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 400;
+}
+.footer small {
+  display: block;
+  font-size: 9px;
+}
+.skip {
+  position: absolute;
+  top: 0;
+  left: 12px;
+  transform: translateY(-120%);
+  padding: 12px;
+  background: white;
+  z-index: 10;
+}
+.skip:focus {
+  transform: translateY(0);
+}
+@media (max-width: 599px) {
+  .header h1 {
+    font-size: 32px;
+  }
+}

@@ -1,0 +1,32 @@
+:root {
+  font-family: 'Trebuchet MS', Arial, sans-serif;
+  color: #26222e;
+  background: #fff;
+  font-synthesis: none;
+  --purple: #5829bb;
+  --yellow: #f7bc3e;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-width: 280px;
+}
+button,
+input {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 3px solid #1f60ba;
+  outline-offset: 3px;
+}
