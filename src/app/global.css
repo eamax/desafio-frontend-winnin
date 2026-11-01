@@ -1,13 +1,21 @@
+@font-face {
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url('/fonts/mulish-latin-wght-normal.woff2') format('woff2');
+}
+
 :root {
-  font-family: 'Trebuchet MS', Arial, sans-serif;
+  font-family: Mulish, sans-serif;
   color: #26222e;
   background: #fff;
   font-synthesis: none;
-  --purple: #6124c5;
-  --score-red: #ea2151;
+  --purple: #6324c6;
+  --score-red: #e92151;
   --score-yellow: #ffb800;
-  --score-green: #09ada6;
-  --yellow: #f7bc3e;
+  --score-green: #01ada6;
+  --yellow: #ffb800;
 }
 * {
   box-sizing: border-box;

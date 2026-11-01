@@ -11,3 +11,5 @@ Switching criteria truncates the destination cache to its first page while prese
 Docker build stage installs dependencies and compiles with Node 22; production contains only static output and unprivileged Nginx. Compose publishes 8080 with a read-only root filesystem and temporary writable /tmp. No secrets are required for public AniList queries.
 
 Tests simulate the external boundary. The separate live API smoke confirms the real query contract without making CI availability-dependent.
+
+Licensed local Mulish fonts are served as static assets with the application; no runtime Google Fonts or font CDN requests are required. The architecture boundaries are unchanged.

@@ -4,15 +4,19 @@ import { CatalogError, type AnimeFormat } from './api';
 import { useAnimeCatalog } from './useAnimeCatalog';
 import styles from './AnimeCatalog.module.css';
 
-const FORMATS: { label: string; value: AnimeFormat | null }[] = [
-  { label: 'All Formats', value: null },
-  { label: 'TV Show', value: 'TV' },
-  { label: 'Movie', value: 'MOVIE' },
-  { label: 'TV Short', value: 'TV_SHORT' },
-  { label: 'Special', value: 'SPECIAL' },
-  { label: 'OVA', value: 'OVA' },
-  { label: 'ONA', value: 'ONA' },
-  { label: 'Music', value: 'MUSIC' },
+const FORMATS: {
+  label: string;
+  value: AnimeFormat | null;
+  minWidth: number;
+}[] = [
+  { label: 'All Formats', minWidth: 119, value: null },
+  { label: 'TV Show', minWidth: 105, value: 'TV' },
+  { label: 'Movie', minWidth: 76, value: 'MOVIE' },
+  { label: 'TV Short', minWidth: 105, value: 'TV_SHORT' },
+  { label: 'Special', minWidth: 88, value: 'SPECIAL' },
+  { label: 'OVA', minWidth: 65, value: 'OVA' },
+  { label: 'ONA', minWidth: 67, value: 'ONA' },
+  { label: 'Music', minWidth: 76, value: 'MUSIC' },
 ];
 
 function SkeletonCards({ count }: { count: number }) {
@@ -95,6 +99,7 @@ export function AnimeCatalog() {
               type="button"
               aria-pressed={format === item.value}
               className={styles.format}
+              style={{ minWidth: item.minWidth }}
               disabled={coolingDown}
               onClick={() => changeFormat(item.value)}
             >
@@ -110,13 +115,13 @@ export function AnimeCatalog() {
             id="anime-search"
             name="search"
             type="search"
-            placeholder="Buscar anime..."
+            placeholder="Digite algo aqui..."
             value={draft}
             onChange={(event) => setDraft(event.target.value)}
             disabled={coolingDown}
           />
           <button type="submit" disabled={coolingDown}>
-            Buscar
+            <span>Buscar</span>
           </button>
         </form>
       </div>
@@ -207,7 +212,26 @@ export function AnimeCatalog() {
             }}
             disabled={coolingDown || catalog.isFetching}
           >
-            {catalog.isFetchingNextPage ? 'Carregando…' : 'Ver mais'}
+            {!catalog.isFetchingNextPage && (
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                className={styles.loadMoreIcon}
+                viewBox="0 0 24 24"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M5.143 12H18.857M12 5.143V18.857"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.286"
+                  strokeLinecap="round"
+                />
+              </svg>
+            )}
+            <span className={styles.loadMoreLabel}>
+              {catalog.isFetchingNextPage ? 'Carregando…' : 'Ver mais'}
+            </span>
           </button>
         )}
       </div>

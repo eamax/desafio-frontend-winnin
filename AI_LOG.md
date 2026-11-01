@@ -33,3 +33,21 @@ QA revoked the layout approval after reproducing empty-result-to-pending expansi
 ## Format and score visual correction
 
 User identified dark inactive filter text and dark bold score numbers diverging from the Figma. Root sampled the reference JPEG and converted its Display P3 profile to sRGB; frontend agent specified R13 first, then applied primary/score tokens and regular white numeric text. Preserved 80 as yellow and neutral missing scores. Rejected claiming exact Figma metadata or contrast compliance from screenshot-derived colors; documented the low-contrast fidelity trade-off. Added computed-style browser regression for boundary values and filter selection. Independent QA/reviewer gate pending.
+
+## Whole-page visual audit in progress
+
+User requested a full comparison after identifying footer typography and load-more discrepancies. Independent QA inventoried the full reference; frontend agent applied the first confirmed findings (V01 white regular plus/load-more styling and V02 exact placeholder) after specifying them. Remaining typography/assets and geometry await reference evidence. No invented font or complete visual-fidelity claim was accepted.
+
+## Authenticated Figma correction
+
+User authenticated the reference. QA inspected individual nodes and disproved earlier guesses: Mulish rather than Trebuchet/Arial; load-more Semibold600 rather than400; score text light gray rather than white; Primary#6324c6,Success#01ada6,Danger#e92151 and rowgap21 rather than screenshot samples. Developer replaced the estimates, bundled licensed Mulish locally, preserved observed footer offsets and natural font metrics, and added rendered geometry checks after document.fonts.ready. Rejected copying fixed frameheight and inventing letter-spacing to mask rounding. Header/footer positions match within0.35px; native header width differs1.5px from rounded design box. Final icon/overlay/group inspection and independent golden review remain pending.
+
+The authenticated add icon is a vector slot29.82×24, not a font glyph. Figma export timed out, so developer reconstructed a basic two-bar plus as inline SVG. This is explicitly recorded as a reconstruction, not an exported or byte-identical Figma asset; independent QA will compare its shape at zoom.
+
+Final source inspection confirmed overlay endpoint alphas85%/17%, iconwhite fill and all11 finding corrections. Angle/stops position and ANIME mixed-text hex were not exposed: vertical top-dark/bottom-light and shared Warning yellow remain explicitly labeled visual inferences. Kept cover/center because crop mode was unavailable. Added deterministic historical12-record screenshots with neutral SVG artwork, local fontsready and zero divergent pixels after Playwright’s default perceptual/antialias tolerance; no binary equality claim. Mac candidates use bundled Chromium1.64.1; Linux candidates/CI use the matching pinned Noble container. Generated candidates are not treated as QA-approved golden references.
+
+QA rejected the initial golden candidate: raw Figma Content contained a hard newline lost by the accessibility snapshot. Developer preserved that literal newline in the fixture and added generic pre-line title rendering plus unit/browser regressions, without inventing breaks in live records. Candidate replay had proven repeatability, not fidelity; both Mac/Linux candidates were invalidated until all raw strings are checked.
+
+QA zoom comparison also rejected the square14×14 plus reconstruction. Developer replaced it with round-capped strokes and nonuniform24×24-to29.82×24 scaling, yielding the observed≈19.88×16 visible cross. Regression checks the round caps, stroke, scaling and inferred visible bounds. This geometry follows QA measurement, not an exported source path. QA confirmed no hard newline in the other11 raw titles. New Mac candidates are generated only after both corrections.
+
+Root measured an additional V01 discrepancy hidden by whole-button bounds: the source label occupies101.9px while its natural glyphs are≈81px. QA raw Content and zoom confirmed a centered layout box, not spacing characters or stretched font. Developer added a minimum-width label span and individual slot/label/gap regressions; all font metrics remain unchanged. Candidates are regenerated only after this third correction.

@@ -15,12 +15,17 @@
   background: var(--purple);
   color: white;
   text-align: center;
-  padding: 12px 16px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
 }
 .header h1 {
   font-size: 40px;
   font-weight: 400;
-  line-height: 1.1;
+  line-height: 28px;
+  letter-spacing: 0;
   margin: 0;
 }
 .header span,
@@ -31,17 +36,30 @@
   text-align: center;
   background: var(--purple);
   color: white;
-  padding: 6px 16px;
+  height: 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 16px;
   margin-top: 24px;
 }
 .footer p {
   margin: 0;
   font-size: 24px;
   font-weight: 400;
+  line-height: 17px;
+  letter-spacing: 0;
+  transform: translateX(8px);
 }
 .footer small {
   display: block;
-  font-size: 9px;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 7px;
+  letter-spacing: 0;
+  transform: translateX(9.5px);
 }
 .skip {
   position: absolute;
@@ -58,5 +76,14 @@
 @media (max-width: 599px) {
   .header h1 {
     font-size: 32px;
+  }
+}
+
+@supports (text-box: trim-both cap alphabetic) {
+  .header h1,
+  .footer p,
+  .footer small {
+    line-height: 1;
+    text-box: trim-both cap alphabetic;
   }
 }

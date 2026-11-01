@@ -15,7 +15,7 @@ export function AnimeCard({ anime }: { anime: Anime }) {
           src={anime.coverImage ?? undefined}
           alt={`Capa de ${anime.title}`}
           loading="lazy"
-          width="316"
+          width="317"
           height="270"
           onError={() => setFailedCover(anime.coverImage)}
         />

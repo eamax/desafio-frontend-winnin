@@ -38,6 +38,7 @@ npm run check
 npm run format:check
 npx playwright install chromium
 npm run test:e2e
+npm run test:visual
 ```
 
 `check` runs ESLint, TypeScript, Vitest and the production build. Individual commands: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`. `npm run test:watch` starts watch mode; `npm run format` formats files.
@@ -51,7 +52,7 @@ Unit/integration tests use Vitest, Testing Library and MSW. Browser journeys use
 - Requests are cancellable, cached for five minutes and never automatically retried. Rate limits show a cooldown and explicit retry; a failed additional page preserves existing cards.
 - Initial loading uses 12 decorative skeleton cards; changing criteria retains the previous result-area size and skeleton count until the new response arrives. After empty results, a compact loading placeholder preserves the previous area. Additional pages keep existing cards and append 12 skeletons. The footer reaches the viewport bottom on short catalogs and follows long content normally. [Layout behavior](docs/catalog-layout.md).
 - Desktop uses four columns; tablet two; mobile one. Keyboard labels, focus states and non-color score descriptions are included.
-- Live titles, covers, genres and scores differ from the historical Figma examples. The written rule makes score 80 yellow despite the mockup's green example. System fonts are used; exact Figma font metadata was not available in the anonymous inspection. Responsive layouts are documented adaptations, not an assertion of pixel-perfect reproduction.
+- Live titles, covers, genres and scores differ from the historical Figma examples. The written rule makes score 80 yellow despite the mockup's green example. Authenticated Mulish typography is bundled locally with its OFL license; design tokens and bounds come from authenticated Figma inspection. Independent QA accepted the V01–V11 visual corrections and platform-specific screenshot baselines. Native font advances can still cause different wrapping across operating systems. Responsive layouts are documented adaptations, not an assertion of pixel-perfect reproduction.
 - Deployment online is outside this delivery. No login, favorites, backend or details route.
 
 ## Preview
@@ -63,7 +64,9 @@ Captured during a live Docker smoke; catalog data can change.
 ## Documentation
 
 - [Specification and SDD increments](docs/specification.md)
-- [Sampled design colors and badge styling](docs/design-tokens.md)
+- [Authenticated design tokens and typography](docs/design-tokens.md)
+- [Whole-page visual audit](docs/visual-audit.md)
+- [Deterministic visual regression workflow](docs/visual-regression.md)
 - [Technical decisions and trade-offs](DECISIONS.md)
 - [Validation evidence and resolved findings](docs/validation.md)
 - [Final architecture](docs/architecture/README.md), [Mermaid](docs/architecture/architecture.mmd), [SVG](docs/architecture/architecture.svg)

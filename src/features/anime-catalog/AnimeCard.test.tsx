@@ -12,6 +12,18 @@ const anime: Anime = {
 };
 
 describe('AnimeCard', () => {
+  it('preserves explicit title newlines without injecting breaks into other records', () => {
+    const title = 'Zom 100: Zombie ni Naru Made\nni Shitai 100 no Koto';
+    const { rerender } = render(<AnimeCard anime={{ ...anime, title }} />);
+    expect(screen.getByRole('heading', { level: 2 }).textContent).toBe(title);
+    rerender(
+      <AnimeCard anime={{ ...anime, title: 'An unmodified live title' }} />,
+    );
+    expect(screen.getByRole('heading', { level: 2 }).textContent).toBe(
+      'An unmodified live title',
+    );
+  });
+
   it('renders the title, genres, cover and accessible numeric score', () => {
     render(<AnimeCard anime={anime} />);
     expect(
